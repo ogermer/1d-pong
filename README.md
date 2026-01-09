@@ -329,6 +329,8 @@ Contributions are welcome! Here's how you can help:
 - [ ] High score tracking
 - [ ] Adjustable difficulty modes
 - [ ] More visual feedback options
+- [ ] Button LED integration for gameplay feedback and attract animations
+  - Note: Button LEDs have integrated resistors for 5V operation and require level shifters or transistors/MOSFETs to drive from ESP32
 
 ## Credits
 
