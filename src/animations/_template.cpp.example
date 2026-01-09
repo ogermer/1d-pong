@@ -1,0 +1,73 @@
+/*
+ * Animation Template
+ * ------------------
+ * Copy this file to create a new animation.
+ *
+ * Steps:
+ * 1. Copy this file and rename it (e.g., my_animation.cpp)
+ * 2. Rename the class (e.g., MyAnimation)
+ * 3. Update the REGISTER_ANIMATION macro at the bottom
+ * 4. Implement your animation logic in update()
+ * 5. Build - the animation will be automatically detected and added!
+ *
+ * Available in update():
+ * - leds[]: The LED array to write colors to
+ * - numLeds: Number of LEDs in the strip
+ * - FastLED.show(): Call this to display your changes
+ *
+ * Available from config.h:
+ * - NUM_LEDS: Total LED count
+ * - BRIGHTNESS: Global brightness setting
+ * - Various color constants (COLOR_ZONE_LEFT, etc.)
+ *
+ * Tips:
+ * - Use millis() for non-blocking timing
+ * - Keep update() fast - don't use delay()
+ * - Use reset() to initialize state when animation starts
+ * - Store state in private member variables
+ */
+
+#include "animation.h"
+
+class TemplateAnimation : public Animation {
+public:
+    TemplateAnimation(const char* name) : Animation(name) {}
+
+    // Called when this animation starts (or restarts)
+    void reset() override {
+        _position = 0;
+        _lastUpdate = 0;
+    }
+
+    // Called repeatedly - implement your animation here
+    void update(CRGB* leds, uint8_t numLeds) override {
+        // Non-blocking timing - adjust the delay (ms) as needed
+        if (millis() - _lastUpdate < 50) return;
+        _lastUpdate = millis();
+
+        // Clear the strip
+        fill_solid(leds, numLeds, CRGB::Black);
+
+        // === YOUR ANIMATION LOGIC HERE ===
+
+        // Example: moving dot
+        leds[_position] = CRGB::White;
+
+        // Move position
+        _position = (_position + 1) % numLeds;
+
+        // === END ANIMATION LOGIC ===
+
+        // Display the result
+        FastLED.show();
+    }
+
+private:
+    // Add your state variables here
+    uint8_t _position = 0;
+    uint32_t _lastUpdate = 0;
+};
+
+// Register the animation - change both the class name and display name
+// The display name appears in serial output for debugging
+REGISTER_ANIMATION(TemplateAnimation, "Template");
