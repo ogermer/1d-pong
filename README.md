@@ -26,10 +26,8 @@ A two-player reaction game played on a single strip of WS2812B LEDs. Players com
 
 ### Wiring Diagram
 
-<!-- TODO: Add wiring diagram image -->
-```
-[Placeholder: Wiring diagram to be added]
-```
+<!-- Add your wiring diagram image to docs/images/wiring-diagram.png -->
+![Wiring Diagram](docs/images/wiring-diagram.png)
 
 ### Pin Connections
 
@@ -44,10 +42,9 @@ A two-player reaction game played on a single strip of WS2812B LEDs. Players com
 
 ### Photos
 
-<!-- TODO: Add photos of the finished project -->
-```
-[Placeholder: Project photos to be added]
-```
+<!-- Add your project photos to docs/images/ -->
+![Project Photo](docs/images/project-photo-1.jpg)
+![Project Detail](docs/images/project-photo-2.jpg)
 
 ## Installation
 
