@@ -24,10 +24,13 @@ A two-player reaction game played on a single strip of WS2812B LEDs. Players com
 | Power Supply | 5V, 3A recommended | 1 |
 | Wires | Jumper wires | As needed |
 
+<!-- 
 ### Wiring Diagram
 
-<!-- Add your wiring diagram image to docs/images/wiring-diagram.png -->
+Add your wiring diagram image to docs/images/wiring-diagram.png 
 ![Wiring Diagram](docs/images/wiring-diagram.png)
+
+-->
 
 ### Pin Connections
 
@@ -43,8 +46,8 @@ A two-player reaction game played on a single strip of WS2812B LEDs. Players com
 ### Photos
 
 <!-- Add your project photos to docs/images/ -->
-![Project Photo](docs/images/project-photo-1.jpg)
-![Project Detail](docs/images/project-photo-2.jpg)
+![Project Photo](docs/images/1d-pong-39c3.gif)
+<!-- ![Project Detail](docs/images/project-photo-2.jpg) -->
 
 ## Installation
 
