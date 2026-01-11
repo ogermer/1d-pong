@@ -26,7 +26,7 @@ A two-player reaction game played on a single strip of WS2812B LEDs. Players com
 
 ### Schematic
 
-![Schematic Diagram](docs/schematics/1d-pong/1d-pong.svg)
+![Schematic Diagram](docs/schematics/1d-pong/1d-pong.png)
 
 [Download PDF Schematic](docs/schematics/1d-pong/1d-pong.pdf)
 
