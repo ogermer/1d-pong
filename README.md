@@ -289,6 +289,10 @@ The animation system uses auto-registration - simply create a new `.cpp` file in
 └── README.md
 ```
 
+## Development Note
+
+This project was developed with assistance from AI tools (Claude, ChatGPT, etc.). All code has been reviewed and tested by the author.
+
 ## Contributing
 
 Contributions are welcome! Here's how you can help:
