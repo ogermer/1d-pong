@@ -89,6 +89,12 @@ Edit `include/config.h` to customize:
 #define BUTTON_LEFT_PIN     17      // Left player button
 #define BUTTON_RIGHT_PIN    18      // Right player button
 
+// Button LEDs (PWM capable pins)
+#define BUTTON_LED_LEFT_PIN  25     // Left button LED
+#define BUTTON_LED_RIGHT_PIN 26     // Right button LED
+#define BUTTON_LED_PWM_FREQ  5000   // 5kHz PWM frequency
+#define BUTTON_LED_PWM_RES   8      // 8-bit resolution (0-255)
+
 // Game Parameters
 #define ZONE_SIZE_START     10      // Initial zone size (LEDs)
 #define ZONE_SIZE_MIN       5       // Minimum zone size
@@ -320,7 +326,7 @@ Contributions are welcome! Here's how you can help:
 - [ ] High score tracking
 - [ ] Adjustable difficulty modes
 - [ ] More visual feedback options
-- [ ] Button LED integration for gameplay feedback and attract animations
+- [x] Button LED integration for gameplay feedback and attract animations
   - Note: Button LEDs have integrated resistors for 5V operation and require level shifters or transistors/MOSFETs to drive from ESP32
 
 ## Credits
