@@ -129,50 +129,37 @@ Edit `include/config.h` to customize:
 
 ## Game State Machine
 
-```
-┌───────────────────────────────────────────────────────────────┐
-│                                                               │
-│  ┌──────────┐    Button     ┌──────────┐                      │
-│  │          │    Press      │          │                      │
-│  │   IDLE   │──────────────►│  SERVE   │                      │
-│  │          │               │          │                      │
-│  └──────────┘               └────┬─────┘                      │
-│       ▲                          │                            │
-│       │                          │ Countdown                  │
-│       │                          ▼                            │
-│       │                    ┌───────────┐                      │
-│       │                    │           │                      │
-│       │            ┌──────►│   BALL    │◄─────┐               │
-│       │            │       │  MOVING   │      │               │
-│       │            │       │           │      │               │
-│       │            │       └─────┬─────┘      │               │
-│       │            │             │            │               │
-│       │            │             │ Miss or    │               │
-│       │            │             │ Hit        │               │
-│       │            │             ▼            │               │
-│       │            │       ┌───────────┐      │               │
-│       │            │       │   CHECK   │      │               │
-│       │            │       │   GAME    │      │ Not Game      │
-│       │            │       │   OVER    │      │ Over          │
-│       │            │       └─────┬─────┘      │               │
-│       │            │             │            │               │
-│       │            │             │ Game       │               │
-│       │            │             │ Over?      │               │
-│       │            │             ▼            │               │
-│       │            │       ┌───────────┐      │               │
-│       │            │  No   │           │      │               │
-│       │            └───────┤  (check)  ├──────┘               │
-│       │                    │           │                      │
-│       │                    └─────┬─────┘                      │
-│       │                          │ Yes                        │
-│       │                          ▼                            │
-│       │                    ┌───────────┐                      │
-│       │                    │   GAME    │                      │
-│       └────────────────────┤   OVER    │                      │
-│         Win Animation      │           │                      │
-│                            └───────────┘                      │
-│                                                               │
-└───────────────────────────────────────────────────────────────┘
+```mermaid
+stateDiagram-v2
+    [*] --> IDLE
+    IDLE --> SERVE : Button Press
+    SERVE --> BALL_MOVING : Countdown Complete
+    BALL_MOVING --> BALL_MOVING : Successful Hit
+    BALL_MOVING --> CHECK_GAME_OVER : Miss or Penalty
+    CHECK_GAME_OVER --> SERVE : Score < 5
+    CHECK_GAME_OVER --> GAME_OVER : Score ≥ 5
+    GAME_OVER --> IDLE : Win Animation Complete
+
+    note right of IDLE
+        Attract mode animations
+        Button LED breathing & pulses
+    end note
+
+    note right of SERVE
+        Countdown with visual pulse
+        Zone shrinks after each point
+    end note
+
+    note right of BALL_MOVING
+        Active gameplay
+        Button LEDs indicate active zones
+        Flash on hit, blink on miss
+    end note
+
+    note right of GAME_OVER
+        Display winner animation
+        First to 5 points wins
+    end note
 ```
 
 ### States

@@ -11,6 +11,12 @@
 #define BUTTON_RIGHT_PIN    18
 #define BUTTON_ACTIVE_LEVEL LOW
 
+// Button LEDs (PWM capable pins)
+#define BUTTON_LED_LEFT_PIN  25
+#define BUTTON_LED_RIGHT_PIN 26
+#define BUTTON_LED_PWM_FREQ  5000  // 5kHz PWM frequency
+#define BUTTON_LED_PWM_RES   8     // 8-bit resolution (0-255)
+
 // ======================================================
 // Global Brightness
 // ======================================================

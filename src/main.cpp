@@ -2,6 +2,7 @@
 #include <FastLED.h>
 #include "config.h"
 #include "animation.h"
+#include "button_led.h"
 
 // ======================================================
 // LED Array
@@ -173,12 +174,15 @@ void prepareServe() {
         drawZones();
         leds[NUM_LEDS / 2] = CRGB::Yellow;
         FastLED.show();
+        ButtonLED::pulseCountdown(255);  // Bright pulse
         vTaskDelay(pdMS_TO_TICKS(200));
         clearLeds();
         drawZones();
         FastLED.show();
+        ButtonLED::pulseCountdown(0);  // Off
         vTaskDelay(pdMS_TO_TICKS(200));
     }
+    ButtonLED::setOff();  // Ensure off after countdown
 }
 
 // ======================================================
@@ -249,6 +253,10 @@ void gameTask(void* pvParameters) {
             }
             // Run attract mode animations
             animManager.update(leds, NUM_LEDS);
+
+            // Button LED idle effects
+            ButtonLED::updateBreathing();
+            ButtonLED::triggerAttentionPulse();
             break;
         }
 
@@ -270,8 +278,12 @@ void gameTask(void* pvParameters) {
             bool inLeft  = (ballPos >= 0 && ballPos < (int)currentZoneSize);
             bool inRight = (ballPos >= (int)NUM_LEDS - (int)currentZoneSize);
 
+            // Button LED active zone indication
+            ButtonLED::setActiveZone(inLeft, inRight);
+
             // Penalty: press outside zone
             if (leftPressed && !inLeft) {
+                ButtonLED::blinkMiss(true);  // Left button LED blinks
                 showMissAnimation(PLAYER_LEFT);
                 scoreRight++;
                 lastLoser = PLAYER_LEFT;
@@ -279,6 +291,7 @@ void gameTask(void* pvParameters) {
                 break;
             }
             if (rightPressed && !inRight) {
+                ButtonLED::blinkMiss(false);  // Right button LED blinks
                 showMissAnimation(PLAYER_RIGHT);
                 scoreLeft++;
                 lastLoser = PLAYER_RIGHT;
@@ -289,6 +302,7 @@ void gameTask(void* pvParameters) {
             // Successful hit with early-hit bonus
             // Early hit = ball just entered zone, late hit = ball about to exit
             if (inLeft && leftPressed) {
+                ButtonLED::flashHit(true);  // Left button LED flash
                 showKeypressFeedback(PLAYER_LEFT);
                 ballDir = +1;
 
@@ -306,6 +320,7 @@ void gameTask(void* pvParameters) {
                     ballDelayMs = BALL_DELAY_MIN;
             }
             if (inRight && rightPressed) {
+                ButtonLED::flashHit(false);  // Right button LED flash
                 showKeypressFeedback(PLAYER_RIGHT);
                 ballDir = -1;
 
@@ -325,6 +340,7 @@ void gameTask(void* pvParameters) {
 
             // Normal miss
             if (ballPos < 0) {
+                ButtonLED::blinkMiss(true);  // Left button LED blinks
                 showMissAnimation(PLAYER_LEFT);
                 scoreRight++;
                 lastLoser = PLAYER_LEFT;
@@ -332,6 +348,7 @@ void gameTask(void* pvParameters) {
                 break;
             }
             if (ballPos >= NUM_LEDS) {
+                ButtonLED::blinkMiss(false);  // Right button LED blinks
                 showMissAnimation(PLAYER_RIGHT);
                 scoreLeft++;
                 lastLoser = PLAYER_RIGHT;
@@ -378,6 +395,9 @@ void setup() {
     FastLED.setBrightness(BRIGHTNESS);
     clearLeds();
     FastLED.show();
+
+    // Initialize button LEDs
+    ButtonLED::init();
 
     buttonQueue = xQueueCreate(10, sizeof(ButtonEvent));
 
