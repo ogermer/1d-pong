@@ -39,6 +39,8 @@ Add your wiring diagram image to docs/images/wiring-diagram.png
 | LED Data | GPIO 5 |
 | Left Button | GPIO 17 |
 | Right Button | GPIO 18 |
+| Left Button LED | GPIO 25 (PWM) |
+| Right Button LED | GPIO 26 (PWM) |
 | LED Power | 5V |
 | LED Ground | GND |
 | Buttons | GND (active LOW with internal pull-up) |
